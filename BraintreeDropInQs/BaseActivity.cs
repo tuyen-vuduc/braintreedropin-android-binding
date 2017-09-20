@@ -178,7 +178,7 @@ namespace BraintreeDropInQs
             actionBar.SetDisplayShowTitleEnabled(false);
             actionBar.NavigationMode = (int)ActionBarNavigationMode.List;
 
-            ArrayAdapter<Java.Lang.Object> adapter = (ArrayAdapter<Java.Lang.Object>)ArrayAdapter.CreateFromResource(this,
+            ArrayAdapter adapter =ArrayAdapter.CreateFromResource(this,
                     Resource.Array.environments, Android.Resource.Layout.SimpleDropDownItem1Line);
             actionBar.SetListNavigationCallbacks(adapter, this);
             actionBar.SetSelectedNavigationItem(Settings.getEnvironment(this));

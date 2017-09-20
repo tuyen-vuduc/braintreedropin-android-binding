@@ -18,7 +18,7 @@ using Java.Lang;
 
 namespace BraintreeDropInQs
 {
-    [Activity(Label = "BraintreeDropInQs", MainLauncher = true)]
+    [Activity(Label = "BraintreeDropInQs", MainLauncher = true, Theme = "@style/Theme.AppCompat.Light")]
     public class MainActivity : BaseActivity, IPaymentMethodNonceCreatedListener, IBraintreeCancelListener, IBraintreeErrorListener, DropInResult.IDropInResultListener
     {
         private static int DROP_IN_REQUEST = 100;
@@ -67,7 +67,7 @@ namespace BraintreeDropInQs
             {
                 if (savedInstanceState.ContainsKey(KEY_NONCE))
                 {
-                   // mNonce = savedInstanceState.GetParcelable(KEY_NONCE);
+                   mNonce = (PaymentMethodNonce)savedInstanceState.GetParcelable(KEY_NONCE);
                 }
             }
         }
@@ -250,7 +250,7 @@ namespace BraintreeDropInQs
 
         protected override void reset()
         {
-            throw new System.NotImplementedException();
+           // throw new System.NotImplementedException();
         }
         private void displayResult(PaymentMethodNonce paymentMethodNonce, string deviceData)
         {

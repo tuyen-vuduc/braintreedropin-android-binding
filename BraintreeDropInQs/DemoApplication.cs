@@ -16,12 +16,18 @@ using Square.Retrofit;
 
 namespace BraintreeDropInQs
 {
+    [Application]
     public class DemoApplication : Application, IUncaughtExceptionHandler
     {
         private static ApiClient sApiClient;
 
         private Thread.IUncaughtExceptionHandler mDefaultExceptionHandler;
 
+        public DemoApplication() : base()
+        {
+
+        }
+        protected DemoApplication(IntPtr javaReference, JniHandleOwnership transfer) :base(javaReference, transfer) { }
 
         public override void OnCreate()
         {
@@ -72,7 +78,7 @@ namespace BraintreeDropInQs
                         .SetEndpoint(Settings.getEnvironmentUrl(context))
                         .SetRequestInterceptor(new ApiClientRequestInterceptor())
                         .Build()
-                        .Create(Class.FromType(typeof(ApiClient)));
+                        .Create(Class.ForName(nameof(ApiClient)));// 
             }
 
             return sApiClient;
