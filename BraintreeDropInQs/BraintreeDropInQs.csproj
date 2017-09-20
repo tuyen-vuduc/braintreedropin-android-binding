@@ -198,6 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiInternal\SignatureVerificationOverrides.cs" />
+    <Compile Include="BaseActivity.cs" />
     <Compile Include="BuildConfig.cs" />
     <Compile Include="CreateTransactionActivity.cs" />
     <Compile Include="DemoApplication.cs" />

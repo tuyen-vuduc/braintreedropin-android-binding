@@ -4522,56 +4522,56 @@ namespace BraintreeDropInQs
 			// aapt resource value: 0x7f08009e
 			public const int collect_device_data_summary = 2131230878;
 			
+			// aapt resource value: 0x7f080001
+			public const int common_google_play_services_enable_button = 2131230721;
+			
 			// aapt resource value: 0x7f080002
-			public const int common_google_play_services_enable_button = 2131230722;
+			public const int common_google_play_services_enable_text = 2131230722;
 			
 			// aapt resource value: 0x7f080003
-			public const int common_google_play_services_enable_text = 2131230723;
+			public const int common_google_play_services_enable_title = 2131230723;
 			
 			// aapt resource value: 0x7f080004
-			public const int common_google_play_services_enable_title = 2131230724;
+			public const int common_google_play_services_install_button = 2131230724;
 			
 			// aapt resource value: 0x7f080005
-			public const int common_google_play_services_install_button = 2131230725;
+			public const int common_google_play_services_install_text = 2131230725;
 			
 			// aapt resource value: 0x7f080006
-			public const int common_google_play_services_install_text = 2131230726;
+			public const int common_google_play_services_install_title = 2131230726;
 			
 			// aapt resource value: 0x7f080007
-			public const int common_google_play_services_install_title = 2131230727;
-			
-			// aapt resource value: 0x7f080008
-			public const int common_google_play_services_notification_ticker = 2131230728;
-			
-			// aapt resource value: 0x7f080001
-			public const int common_google_play_services_unknown_issue = 2131230721;
-			
-			// aapt resource value: 0x7f080009
-			public const int common_google_play_services_unsupported_text = 2131230729;
-			
-			// aapt resource value: 0x7f08000a
-			public const int common_google_play_services_update_button = 2131230730;
-			
-			// aapt resource value: 0x7f08000b
-			public const int common_google_play_services_update_text = 2131230731;
-			
-			// aapt resource value: 0x7f08000c
-			public const int common_google_play_services_update_title = 2131230732;
-			
-			// aapt resource value: 0x7f08000d
-			public const int common_google_play_services_updating_text = 2131230733;
-			
-			// aapt resource value: 0x7f08000e
-			public const int common_google_play_services_wear_update_text = 2131230734;
-			
-			// aapt resource value: 0x7f08000f
-			public const int common_open_on_phone = 2131230735;
-			
-			// aapt resource value: 0x7f080010
-			public const int common_signin_button_text = 2131230736;
+			public const int common_google_play_services_notification_ticker = 2131230727;
 			
 			// aapt resource value: 0x7f080011
-			public const int common_signin_button_text_long = 2131230737;
+			public const int common_google_play_services_unknown_issue = 2131230737;
+			
+			// aapt resource value: 0x7f080008
+			public const int common_google_play_services_unsupported_text = 2131230728;
+			
+			// aapt resource value: 0x7f080009
+			public const int common_google_play_services_update_button = 2131230729;
+			
+			// aapt resource value: 0x7f08000a
+			public const int common_google_play_services_update_text = 2131230730;
+			
+			// aapt resource value: 0x7f08000b
+			public const int common_google_play_services_update_title = 2131230731;
+			
+			// aapt resource value: 0x7f08000c
+			public const int common_google_play_services_updating_text = 2131230732;
+			
+			// aapt resource value: 0x7f08000d
+			public const int common_google_play_services_wear_update_text = 2131230733;
+			
+			// aapt resource value: 0x7f08000e
+			public const int common_open_on_phone = 2131230734;
+			
+			// aapt resource value: 0x7f08000f
+			public const int common_signin_button_text = 2131230735;
+			
+			// aapt resource value: 0x7f080010
+			public const int common_signin_button_text_long = 2131230736;
 			
 			// aapt resource value: 0x7f080099
 			public const int customer = 2131230873;
