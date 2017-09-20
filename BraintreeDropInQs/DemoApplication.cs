@@ -64,7 +64,7 @@ namespace BraintreeDropInQs
             // throw log here
 
         }
-        static ApiClient getApiClient(Context context)
+        public static ApiClient getApiClient(Context context)
         {
             if (sApiClient == null)
             {
@@ -78,7 +78,7 @@ namespace BraintreeDropInQs
             return sApiClient;
         }
 
-        static void resetApiClient()
+        public static void resetApiClient()
         {
             sApiClient = null;
         }

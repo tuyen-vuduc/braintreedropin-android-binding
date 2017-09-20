@@ -17,7 +17,7 @@ namespace BraintreeDropInQs
         public static void setup(Application application)
         {
             LeakLoggerService.setupLeakCanary(application);
-            Stetho.initializeWithDefaults(application);
+            //Stetho.initializeWithDefaults(application);
         }
     }
 }

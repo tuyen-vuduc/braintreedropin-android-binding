@@ -90,9 +90,6 @@
     <Reference Include="Naxam.BraintreeCardForm.Droid, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Naxam.BraintreeCardForm.Droid.3.1.0\lib\MonoAndroid10\Naxam.BraintreeCardForm.Droid.dll</HintPath>
     </Reference>
-    <Reference Include="Naxam.Google.Gson, Version=2.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Naxam.Google.Gson.2.6.2\lib\MonoAndroid10\Naxam.Google.Gson.dll</HintPath>
-    </Reference>
     <Reference Include="Naxam.Paypal.DataCollector, Version=2.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Naxam.Paypal.DataCollector.2.6.2\lib\MonoAndroid10\Naxam.Paypal.DataCollector.dll</HintPath>
     </Reference>
@@ -202,6 +199,7 @@
   <ItemGroup>
     <Compile Include="ApiInternal\SignatureVerificationOverrides.cs" />
     <Compile Include="BuildConfig.cs" />
+    <Compile Include="CreateTransactionActivity.cs" />
     <Compile Include="DemoApplication.cs" />
     <Compile Include="DeveloperTools.cs" />
     <Compile Include="Fragments\SettingsFragment.cs" />
@@ -216,6 +214,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsActivity.cs" />
+    <Compile Include="Utilies\CardNumber.cs" />
+    <Compile Include="Utilies\TestHelper.cs" />
     <Compile Include="Views\SummaryEditTestPreference.cs" />
   </ItemGroup>
   <ItemGroup>

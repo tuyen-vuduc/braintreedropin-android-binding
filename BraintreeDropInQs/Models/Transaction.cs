@@ -9,11 +9,11 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Google.Gson.Annotations;
+using GoogleGson.Annotations;
 
 namespace BraintreeDropInQs.Models
 {
-    public class Transaction
+    public class Transaction: Java.Lang.Object
     {
         [SerializedName(Value = "message")]
         private String mMessage;
