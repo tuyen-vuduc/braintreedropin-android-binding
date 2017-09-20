@@ -21,15 +21,19 @@ using Android.Support.V4.Content;
 using Android.Support.V4.App;
 using Android.Content.PM;
 using Android.Text;
+using static Android.Provider.CalendarContract;
+using BraintreeDropInQs.Models;
+using Square.Retrofit;
+using Square.Retrofit.Client;
+using BraintreeDropInQs.Internal;
 
 namespace BraintreeDropInQs
 {
     [Activity(Label = "BaseActivity")]
-    public class BaseActivity : AppCompatActivity, IOnRequestPermissionsResultCallback, IPaymentMethodNonceCreatedListener, IBraintreeCancelListener, IBraintreeErrorListener, Android.Support.V7.App.ActionBar.IOnNavigationListener, IDialogInterfaceOnClickListener
+    public abstract class BaseActivity : AppCompatActivity, IOnRequestPermissionsResultCallback, IPaymentMethodNonceCreatedListener, IBraintreeCancelListener, IBraintreeErrorListener, Android.Support.V7.App.ActionBar.IOnNavigationListener, IDialogInterfaceOnClickListener
     {
         public static string WRITE_EXTERNAL_STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE";
         private static string KEY_AUTHORIZATION = "com.braintreepayments.demo.KEY_AUTHORIZATION";
-
 
         private Android.App.AlertDialog dialog;
         protected string mAuthorization;
@@ -43,7 +47,10 @@ namespace BraintreeDropInQs
         {
             base.OnCreate(savedInstanceState);
 
-            // Create your application here
+            if (savedInstanceState != null && savedInstanceState.ContainsKey(KEY_AUTHORIZATION))
+            {
+                mAuthorization = savedInstanceState.GetString(KEY_AUTHORIZATION);
+            }
         }
 
         protected override void OnResume()
@@ -69,18 +76,11 @@ namespace BraintreeDropInQs
             }
         }
 
-
-
-
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
+        public  override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             handleAuthorizationState();
-
-
         }
-
-
 
         private void handleAuthorizationState()
         {
@@ -101,9 +101,6 @@ namespace BraintreeDropInQs
             }
         }
 
-
-
-
         private void performReset()
         {
             mAuthorization = null;
@@ -112,7 +109,7 @@ namespace BraintreeDropInQs
             if (mBraintreeFragment == null)
             {
                 mBraintreeFragment = (BraintreeFragment)FragmentManager
-                        .FindFragmentByTag("Naxam");
+                        .FindFragmentByTag("Naxam");// change this line later
             }
 
             if (mBraintreeFragment != null)
@@ -133,6 +130,45 @@ namespace BraintreeDropInQs
             reset();
             fetchAuthorization();
         }
+        protected abstract void reset();
+        protected abstract void onAuthorizationFetched();
+        protected void fetchAuthorization()
+        {
+            if (mAuthorization != null)
+            {
+                onAuthorizationFetched();
+            }
+            else if (Settings.useTokenizationKey(this))
+            {
+                mAuthorization = Settings.getEnvironmentTokenizationKey(this);
+                onAuthorizationFetched();
+            }
+            else
+            {
+                DemoApplication.getApiClient(this).getClientToken(Settings.getCustomerId(this),
+                        Settings.getMerchantAccountId(this), new MyCallBack
+                        {
+                            MSuccess = (clientToken, response) =>
+                            {
+                                if (TextUtils.IsEmpty(clientToken.getClientToken()))
+                                {
+                                    showDialog("Client token was empty");
+                                }
+                                else
+                                {
+                                    mAuthorization = clientToken.getClientToken();
+                                    onAuthorizationFetched();
+                                }
+
+                            },
+                            MFailure = (error) =>
+                            {
+                                showDialog("Unable to get a client token. Response Code: ");
+                            }
+
+                        });
+            }
+        }
 
 
 
@@ -142,19 +178,19 @@ namespace BraintreeDropInQs
             actionBar.SetDisplayShowTitleEnabled(false);
             actionBar.NavigationMode = (int)ActionBarNavigationMode.List;
 
-            ArrayAdapter<CharSequence> adapter = ArrayAdapter.CreateFromResource(this,
+            ArrayAdapter<Java.Lang.Object> adapter = (ArrayAdapter<Java.Lang.Object>)ArrayAdapter.CreateFromResource(this,
                     Resource.Array.environments, Android.Resource.Layout.SimpleDropDownItem1Line);
             actionBar.SetListNavigationCallbacks(adapter, this);
             actionBar.SetSelectedNavigationItem(Settings.getEnvironment(this));
         }
 
 
-        public void OnCancel(int p0)
+        public virtual void OnCancel(int p0)
         {
             //mLogger.debug("Cancel received: " + requestCode);
         }
 
-        public void OnError(Java.Lang.Exception p0)
+        public virtual void OnError(Java.Lang.Exception p0)
         {
             //mLogger.debug("Error received (" + error.getClass() + "): " + error.getMessage());
             //mLogger.debug(error.toString());
@@ -164,10 +200,42 @@ namespace BraintreeDropInQs
 
         public bool OnNavigationItemSelected(int itemPosition, long itemId)
         {
-            throw new NotImplementedException();
+            if (Settings.getEnvironment(this) != itemPosition)
+            {
+                Settings.setEnvironment(this, itemPosition);
+                performReset();
+            }
+            return true;
+
         }
 
-        public void OnPaymentMethodNonceCreated(PaymentMethodNonce p0)
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            MenuInflater.Inflate(Resource.Menu.menu, menu);
+            return true;
+        }
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Android.Resource.Id.Home:
+                    Finish();
+                    return true;
+                case Resource.Id.reset:
+                    performReset();
+                    return true;
+                case Resource.Id.settings:
+                    StartActivity(new Intent(this, typeof(SettingsActivity)));
+                    return true;
+                case Resource.Id.feedback:
+                    new LogReporting(this).collectAndSendLogs();
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public virtual  void OnPaymentMethodNonceCreated(PaymentMethodNonce p0)
         {
             //mLogger.debug("Payment Method Nonce received: " + paymentMethodNonce.getTypeLabel());
         }
@@ -193,6 +261,27 @@ namespace BraintreeDropInQs
         public void OnClick(IDialogInterface dialog, int which)
         {
             dialog.Dismiss();
+        }
+    }
+
+
+    public class MyCallBack : Java.Lang.Object, Square.Retrofit.ICallback
+    {
+
+        public Action<RetrofitError> MFailure;
+        public Action<Models.ClientToken, Response> MSuccess;
+
+
+        public void Failure(RetrofitError p0)
+        {
+            MFailure?.Invoke(p0);
+        }
+
+        public void Success(Java.Lang.Object p0, Response p1)
+        {
+            MSuccess?.Invoke((Models.ClientToken)p0, p1);
+
+
         }
     }
 }

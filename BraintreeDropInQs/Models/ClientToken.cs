@@ -13,7 +13,7 @@ using GoogleGson.Annotations;
 
 namespace BraintreeDropInQs.Models
 {
-    public class ClientToken
+    public class ClientToken: Java.Lang.Object
     {
         [SerializedName(Value = "client_token")]
         private String mClientToken;
