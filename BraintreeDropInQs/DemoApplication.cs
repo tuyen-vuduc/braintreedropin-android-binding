@@ -13,6 +13,7 @@ using Java.Lang;
 using static Java.Lang.Thread;
 using BraintreeDropInQs.Internal;
 using Square.Retrofit;
+using Com.Braintreepayments.Api;
 
 namespace BraintreeDropInQs
 {
@@ -25,7 +26,7 @@ namespace BraintreeDropInQs
 
         public DemoApplication() : base()
         {
-
+            new BraintreeBrowserSwitchActivity();
         }
         protected DemoApplication(IntPtr javaReference, JniHandleOwnership transfer) :base(javaReference, transfer) { }
 
@@ -74,11 +75,7 @@ namespace BraintreeDropInQs
         {
             if (sApiClient == null)
             {
-                sApiClient = (ApiClient)new RestAdapter.Builder()
-                        .SetEndpoint(Settings.getEnvironmentUrl(context))
-                        .SetRequestInterceptor(new ApiClientRequestInterceptor())
-                        .Build()
-                        .Create(Class.ForName(nameof(ApiClient)));// 
+                sApiClient = new ApiClientImpl(Settings.getEnvironmentUrl(context));
             }
 
             return sApiClient;

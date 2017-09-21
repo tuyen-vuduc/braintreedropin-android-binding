@@ -203,7 +203,6 @@
     <Compile Include="Fragments\SettingsFragment.cs" />
     <Compile Include="Internal\ApiClient.cs" />
     <Compile Include="Internal\ApiClientRequestInterceptor.cs" />
-    <Compile Include="Internal\LogReporting.cs" />
     <Compile Include="LeakLoggerService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Models\ClientToken.cs" />

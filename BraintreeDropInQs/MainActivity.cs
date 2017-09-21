@@ -15,6 +15,7 @@ using Android.Gms.Wallet;
 using Android.Content;
 using Com.Braintreepayments.Api.Interfaces;
 using Java.Lang;
+using Android.Runtime;
 
 namespace BraintreeDropInQs
 {
@@ -48,9 +49,7 @@ namespace BraintreeDropInQs
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState); 
-            // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.main_activity);
-            //setContentView(R.layout.main_activity);
 
             mPaymentMethod = FindViewById<CardView>(Resource.Id.payment_method);
             mPaymentMethodIcon = FindViewById<ImageView>(Resource.Id.payment_method_icon);
@@ -61,6 +60,8 @@ namespace BraintreeDropInQs
             mDeviceData = FindViewById<TextView>(Resource.Id.device_data);
 
             mAddPaymentMethodButton = FindViewById<Button>(Resource.Id.add_payment_method);
+            mAddPaymentMethodButton.Click += MAddPaymentMethodButton_Click;
+
             mPurchaseButton = FindViewById<Button>(Resource.Id.purchase);
 
             if (savedInstanceState != null)
@@ -71,7 +72,31 @@ namespace BraintreeDropInQs
                 }
             }
         }
-       
+
+
+        private void MAddPaymentMethodButton_Click(object sender, System.EventArgs e)
+        {
+            DropInRequest dropInRequest = new DropInRequest()
+                  .ClientToken(mAuthorization)
+                  .Amount("1.00")
+                  .RequestThreeDSecureVerification(Settings.isThreeDSecureEnabled(this))
+                  .CollectDeviceData(Settings.shouldCollectDeviceData(this))
+                  .AndroidPayCart(getAndroidPayCart())
+                  .AndroidPayShippingAddressRequired(Settings.isAndroidPayShippingAddressRequired(this))
+                  .AndroidPayPhoneNumberRequired(Settings.isAndroidPayPhoneNumberRequired(this))
+                  .AndroidPayAllowedCountriesForShipping(Settings.getAndroidPayAllowedCountriesForShipping(this));
+
+            if (Settings.isPayPalAddressScopeRequested(this))
+            {
+
+                var list = Collections.SingletonList(PayPal.ScopeAddress);
+
+                dropInRequest.PaypalAdditionalScopes(new List<string> { PayPal.ScopeAddress });
+            }
+
+            StartActivityForResult(dropInRequest.GetIntent(this), DROP_IN_REQUEST);
+        }
+
         protected override void OnResume()
         {
             base.OnResume();
@@ -124,28 +149,7 @@ namespace BraintreeDropInQs
             showDialog("An error occurred ");
         }
 
-        public void launchDropIn(View v)
-        {
-            DropInRequest dropInRequest = new DropInRequest()
-                    .ClientToken(mAuthorization)
-                    .Amount("1.00")
-                    .RequestThreeDSecureVerification(Settings.isThreeDSecureEnabled(this))
-                    .CollectDeviceData(Settings.shouldCollectDeviceData(this))
-                    .AndroidPayCart(getAndroidPayCart())
-                    .AndroidPayShippingAddressRequired(Settings.isAndroidPayShippingAddressRequired(this))
-                    .AndroidPayPhoneNumberRequired(Settings.isAndroidPayPhoneNumberRequired(this))
-                    .AndroidPayAllowedCountriesForShipping(Settings.getAndroidPayAllowedCountriesForShipping(this));
-
-            if (Settings.isPayPalAddressScopeRequested(this))
-            {
-
-                var list = Collections.SingletonList(PayPal.ScopeAddress);
-
-                dropInRequest.PaypalAdditionalScopes(new List<string> { PayPal.ScopeAddress });
-            }
-
-            StartActivityForResult(dropInRequest.GetIntent(this), DROP_IN_REQUEST);
-        }
+       
 
         public void purchase(View v)
         {
@@ -319,6 +323,29 @@ namespace BraintreeDropInQs
                 mLoading.Dismiss();
             }
         }
+
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            
+            safelyCloseLoadingView();
+
+            if (resultCode == Result.Ok)
+            {
+                DropInResult result = (DropInResult)data.GetParcelableExtra(DropInResult.ExtraDropInResult);
+                displayResult(result.PaymentMethodNonce, result.DeviceData);
+                mPurchaseButton.Enabled = (true);
+            }
+            else if (resultCode != Result.Canceled)
+            {
+                safelyCloseLoadingView();
+                var error = data.GetSerializableExtra(DropInActivity.ExtraError);
+
+                showDialog(((Exception)error)
+                        .Message);
+            }
+        }
+
     }
 }
 

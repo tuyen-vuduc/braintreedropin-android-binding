@@ -16,6 +16,7 @@ using Square.Retrofit.Client;
 using Com.Braintreepayments.Api.Models;
 using BraintreeDropInQs.Models;
 using Android.Text;
+using System.Threading.Tasks;
 
 namespace BraintreeDropInQs
 {
@@ -36,65 +37,57 @@ namespace BraintreeDropInQs
         }
 
 
-        private void sendNonceToServer(PaymentMethodNonce nonce)
+        private async void sendNonceToServer(PaymentMethodNonce nonce)
         {
-            MCallback callback = new MCallback
-            {
-                MSuccess = (transaction, response) =>
-                {
-                    if (transaction.getMessage() != null &&
-                       transaction.getMessage().StartsWith("created"))
-                    {
-                        setStatus(Resource.String.transaction_complete);
-                        setMessage(new Java.Lang.String(transaction.getMessage()));
-                    }
-                    else
-                    {
-                        setStatus(Resource.String.transaction_failed);
-                        if (TextUtils.IsEmpty(transaction.getMessage()))
-                        {
-                            setMessage(new Java.Lang.String("Server response was empty or malformed"));
-                        }
-                        else
-                        {
-                            setMessage(new Java.Lang.String(transaction.getMessage()));
-                        }
-                    }
-                }
-                ,
+            Task<Transaction> task;
 
-                MFailure = (error) =>
-                 {
-                     setStatus(Resource.String.transaction_failed);
-                     setMessage(new Java.Lang.String("Unable to create a transaction. Response Code: " +
-                            error.Response.Status + " Response body: " +
-                            error.Response.Body));
-
-                 }
-
-
-
-            };
             if (Settings.isThreeDSecureEnabled(this) && Settings.isThreeDSecureRequired(this))
             {
-                DemoApplication.getApiClient(this).createTransaction(nonce.Nonce,
-                        Settings.getThreeDSecureMerchantAccountId(this), true, callback);
+                task = DemoApplication.getApiClient(this).CreateTransaction(nonce.Nonce, Settings.getThreeDSecureMerchantAccountId(this), true);
             }
             else if (Settings.isThreeDSecureEnabled(this))
             {
-                DemoApplication.getApiClient(this).createTransaction(nonce.Nonce,
-                        Settings.getThreeDSecureMerchantAccountId(this), callback);
+                task = DemoApplication.getApiClient(this).CreateTransaction(nonce.Nonce, Settings.getThreeDSecureMerchantAccountId(this));
             }
-            else if (nonce is CardNonce && ((CardNonce)nonce).CardType.Equals("UnionPay")) {
-                DemoApplication.getApiClient(this).createTransaction(nonce.Nonce,
-                        Settings.getUnionPayMerchantAccountId(this), callback);
-            } else {
-                DemoApplication.getApiClient(this).createTransaction(nonce.Nonce, Settings.getMerchantAccountId(this),
-                        callback);
-            } 
+            else if (nonce is CardNonce && ((CardNonce)nonce).CardType.Equals("UnionPay"))
+            {
+                task = DemoApplication.getApiClient(this).CreateTransaction(nonce.Nonce, Settings.getUnionPayMerchantAccountId(this));
+            }
+            else
+            {
+                task = DemoApplication.getApiClient(this).CreateTransaction(nonce.Nonce, Settings.getMerchantAccountId(this));
+            }
+
+            var transaction = await task;
+
+            if (transaction == null)
+            {
+                setStatus(Resource.String.transaction_failed);
+                setMessage(new Java.Lang.String("Unable to create a transaction"));
+
+                return;
+            }
+
+            if (transaction.Message != null &&
+                   transaction.Message.StartsWith("created"))
+            {
+                setStatus(Resource.String.transaction_complete);
+                setMessage(new Java.Lang.String(transaction.Message));
+            }
+            else
+            {
+                setStatus(Resource.String.transaction_failed);
+                if (TextUtils.IsEmpty(transaction.Message))
+                {
+                    setMessage(new Java.Lang.String("Server response was empty or malformed"));
+                }
+                else
+                {
+                    setMessage(new Java.Lang.String(transaction.Message));
+                }
+            }
         }
-
-
+        
         private void setStatus(int message)
         {
             mLoadingSpinner.Visibility = ViewStates.Gone;
@@ -110,24 +103,6 @@ namespace BraintreeDropInQs
             TextView textView = FindViewById<TextView>(Resource.Id.transaction_message);
             textView.Text = message.ToString();
             textView.Visibility = ViewStates.Visible;
-        }
-    }
-
-    public class MCallback : Java.Lang.Object, Square.Retrofit.ICallback
-    {
-
-        public Action<RetrofitError> MFailure;
-        public Action<Transaction, Response> MSuccess;
-
-        public void Failure(RetrofitError p0)
-        {
-            MFailure?.Invoke(p0);
-        }
-
-        public void Success(Java.Lang.Object p0, Response p1)
-        {
-
-            MSuccess?.Invoke((Transaction)p0, p1);
         }
     }
 }

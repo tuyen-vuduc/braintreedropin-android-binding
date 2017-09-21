@@ -59,7 +59,7 @@ namespace BraintreeDropInQs
                     .PutInt(ENVIRONMENT, environment)
                     .Apply();
 
-           DemoApplication.resetApiClient();// change this line later
+           DemoApplication.resetApiClient();
 
         }
 

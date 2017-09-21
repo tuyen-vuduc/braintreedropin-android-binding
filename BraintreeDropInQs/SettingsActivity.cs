@@ -14,7 +14,7 @@ using BraintreeDropInQs.fragments;
 
 namespace BraintreeDropInQs
 {
-    [Activity(Label = "SettingsActivity")]
+    [Activity(Label = "SettingsActivity", Theme = "@style/Theme.AppCompat.Light")]
     public class SettingsActivity : AppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

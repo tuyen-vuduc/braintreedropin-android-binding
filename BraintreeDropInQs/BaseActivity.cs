@@ -109,7 +109,7 @@ namespace BraintreeDropInQs
             if (mBraintreeFragment == null)
             {
                 mBraintreeFragment = (BraintreeFragment)FragmentManager
-                        .FindFragmentByTag("Naxam");// change this line later
+                        .FindFragmentByTag("com.braintreepayments.api.BraintreeFragment");// change this line later
             }
 
             if (mBraintreeFragment != null)
@@ -145,27 +145,20 @@ namespace BraintreeDropInQs
             }
             else
             {
-                DemoApplication.getApiClient(this).getClientToken(Settings.getCustomerId(this),
-                        Settings.getMerchantAccountId(this), new MyCallBack
+                DemoApplication.getApiClient(this).GetClientToken(
+                        Settings.getCustomerId(this),
+                        Settings.getMerchantAccountId(this))
+                        .ContinueWith(t =>
                         {
-                            MSuccess = (clientToken, response) =>
+                            if (t.IsFaulted || TextUtils.IsEmpty(t.Result))
                             {
-                                if (TextUtils.IsEmpty(clientToken.getClientToken()))
-                                {
-                                    showDialog("Client token was empty");
-                                }
-                                else
-                                {
-                                    mAuthorization = clientToken.getClientToken();
-                                    onAuthorizationFetched();
-                                }
-
-                            },
-                            MFailure = (error) =>
-                            {
-                                showDialog("Unable to get a client token. Response Code: ");
+                                showDialog("Client token was empty");
                             }
-
+                            else
+                            {
+                                mAuthorization = t.Result;
+                                onAuthorizationFetched();
+                            }
                         });
             }
         }
@@ -226,9 +219,6 @@ namespace BraintreeDropInQs
                     return true;
                 case Resource.Id.settings:
                     StartActivity(new Intent(this, typeof(SettingsActivity)));
-                    return true;
-                case Resource.Id.feedback:
-                    new LogReporting(this).collectAndSendLogs();
                     return true;
                 default:
                     return false;

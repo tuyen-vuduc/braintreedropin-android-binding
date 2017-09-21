@@ -10,17 +10,14 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using GoogleGson.Annotations;
+using Newtonsoft.Json;
 
 namespace BraintreeDropInQs.Models
 {
     public class ClientToken: Java.Lang.Object
     {
         [SerializedName(Value = "client_token")]
-        private String mClientToken;
-
-        public String getClientToken()
-        {
-            return mClientToken;
-        }
+        [JsonProperty("client_token")]
+        public string Token { get; set; }
     }
 }
