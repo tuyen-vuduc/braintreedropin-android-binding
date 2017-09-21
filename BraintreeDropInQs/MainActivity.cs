@@ -249,12 +249,29 @@ namespace BraintreeDropInQs
 
         protected override void onAuthorizationFetched()
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                mBraintreeFragment = BraintreeFragment.NewInstance(this, mAuthorization);
+
+                if (ClientToken.FromString(mAuthorization) is ClientToken) {
+                    DropInResult.FetchDropInResult(this, mAuthorization, this);
+                } else {
+                    mAddPaymentMethodButton.Visibility= ViewStates.Visible;
+                }
+            }
+            catch (InvalidArgumentException e)
+            {
+                showDialog(e.Message);
+            }
         }
 
         protected override void reset()
         {
-           // throw new System.NotImplementedException();
+            mPurchaseButton.Enabled=false;
+
+            mAddPaymentMethodButton.Visibility=ViewStates.Gone;
+
+            clearNonce();
         }
         private void displayResult(PaymentMethodNonce paymentMethodNonce, string deviceData)
         {

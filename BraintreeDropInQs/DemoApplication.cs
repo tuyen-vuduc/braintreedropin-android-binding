@@ -55,11 +55,7 @@ namespace BraintreeDropInQs
             if (Settings.getVersion(this) != BuildConfig.VERSION_CODE)
             {
                 Settings.setVersion(this);
-                // MailableLog.clearLog(this);
             }
-            //MailableLog.init(this, BuildConfig.DEBUG);
-
-            DeveloperTools.setup(this);
 
             mDefaultExceptionHandler = Thread.DefaultUncaughtExceptionHandler;
             Thread.DefaultUncaughtExceptionHandler = this;

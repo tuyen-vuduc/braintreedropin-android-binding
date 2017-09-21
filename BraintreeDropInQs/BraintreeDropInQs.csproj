@@ -199,11 +199,9 @@
     <Compile Include="BuildConfig.cs" />
     <Compile Include="CreateTransactionActivity.cs" />
     <Compile Include="DemoApplication.cs" />
-    <Compile Include="DeveloperTools.cs" />
     <Compile Include="Fragments\SettingsFragment.cs" />
     <Compile Include="Internal\ApiClient.cs" />
     <Compile Include="Internal\ApiClientRequestInterceptor.cs" />
-    <Compile Include="LeakLoggerService.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Models\ClientToken.cs" />
     <Compile Include="Models\Transaction.cs" />
