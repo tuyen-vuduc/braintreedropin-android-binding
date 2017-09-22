@@ -1,7 +1,7 @@
 <img src="./art/repo_header.png" alt="Braintree DropIn for Xamarin.Android" width="728" />
 
 # Braintree DropIn for Xamarin.Android
-A Xamarin.Android binding library for [Braintree DropIn](https://github.com/braintree/android-card-form) library.
+A Xamarin.Android binding library for [Braintree DropIn](https://github.com/braintree/braintree-android-drop-in) library.
 
 ## About
 This project is maintained by Naxam Co.,Ltd.<br>
