@@ -27,6 +27,7 @@ namespace BraintreeDropInQs
                     .Commit();
 
         }
+
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             if (item.ItemId == Android.Resource.Id.Home)
@@ -35,10 +36,6 @@ namespace BraintreeDropInQs
                 return true;
             }
             return false;
-
         }
-
-
-
     }
 }

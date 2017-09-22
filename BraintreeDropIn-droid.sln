@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naxam.BraintreeDropIn.Droid", "Naxam.BraintreeDropIn .Droid\Naxam.BraintreeDropIn.Droid.csproj", "{33E916F1-74CE-40E0-A5A8-B7043C3623F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naxam.BraintreeDropIn.Droid", "Naxam.BraintreeDropIn.Droid\Naxam.BraintreeDropIn.Droid.csproj", "{33E916F1-74CE-40E0-A5A8-B7043C3623F7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BraintreeDropInQs", "BraintreeDropInQs\BraintreeDropInQs.csproj", "{040714AD-8105-4006-8DA5-77D2775EA9A9}"
 EndProject

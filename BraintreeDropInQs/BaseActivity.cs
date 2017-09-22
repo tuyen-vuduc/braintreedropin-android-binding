@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
@@ -13,7 +8,6 @@ using Android.Support.V7.App;
 using static Android.Support.V4.App.ActivityCompat;
 using Com.Braintreepayments.Api.Interfaces;
 using Com.Braintreepayments.Api.Models;
-using Java.Lang;
 using Com.Braintreepayments.Api;
 using BraintreeDropInQs.ApiInternal;
 using Com.Paypal.Android.Sdk.Onetouch.Core;
@@ -21,27 +15,28 @@ using Android.Support.V4.Content;
 using Android.Support.V4.App;
 using Android.Content.PM;
 using Android.Text;
-using static Android.Provider.CalendarContract;
-using BraintreeDropInQs.Models;
-using Square.Retrofit;
-using Square.Retrofit.Client;
-using BraintreeDropInQs.Internal;
 
 namespace BraintreeDropInQs
 {
     [Activity(Label = "BaseActivity")]
-    public abstract class BaseActivity : AppCompatActivity, IOnRequestPermissionsResultCallback, IPaymentMethodNonceCreatedListener, IBraintreeCancelListener, IBraintreeErrorListener, Android.Support.V7.App.ActionBar.IOnNavigationListener, IDialogInterfaceOnClickListener
+    public abstract class BaseActivity : 
+        AppCompatActivity, 
+        IOnRequestPermissionsResultCallback, 
+        IPaymentMethodNonceCreatedListener, 
+        IBraintreeCancelListener, 
+        IBraintreeErrorListener, 
+        Android.Support.V7.App.ActionBar.IOnNavigationListener, 
+        IDialogInterfaceOnClickListener
     {
         public static string WRITE_EXTERNAL_STORAGE = "android.permission.WRITE_EXTERNAL_STORAGE";
-        private static string KEY_AUTHORIZATION = "com.braintreepayments.demo.KEY_AUTHORIZATION";
 
-        private Android.App.AlertDialog dialog;
+        static string KEY_AUTHORIZATION = "com.braintreepayments.demo.KEY_AUTHORIZATION";
+        Android.App.AlertDialog dialog;
         protected string mAuthorization;
         protected string mCustomerId;
         protected BraintreeFragment mBraintreeFragment;
-        // protected Logger mLogger;
 
-        private bool mActionBarSetup;
+        bool mActionBarSetup;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -58,7 +53,7 @@ namespace BraintreeDropInQs
             base.OnResume();
             if (!mActionBarSetup)
             {
-                setupActionBar();
+                SetupActionBar();
                 mActionBarSetup = true;
             }
 
@@ -72,23 +67,23 @@ namespace BraintreeDropInQs
             }
             else
             {
-                handleAuthorizationState();
+                HandleAuthorizationState();
             }
         }
 
-        public  override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Permission[] grantResults)
         {
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            handleAuthorizationState();
+            HandleAuthorizationState();
         }
 
-        private void handleAuthorizationState()
+        void HandleAuthorizationState()
         {
             if (mAuthorization == null ||
-                    (Settings.useTokenizationKey(this) && !mAuthorization.Equals(Settings.getEnvironmentTokenizationKey(this))) ||
-                    !TextUtils.Equals(mCustomerId, Settings.getCustomerId(this)))
+                    (Settings.UseTokenizationKey(this) && !mAuthorization.Equals(Settings.GetEnvironmentTokenizationKey(this))) ||
+                    !TextUtils.Equals(mCustomerId, Settings.GetCustomerId(this)))
             {
-                performReset();
+                PerformReset();
             }
         }
 
@@ -101,10 +96,10 @@ namespace BraintreeDropInQs
             }
         }
 
-        private void performReset()
+        void PerformReset()
         {
             mAuthorization = null;
-            mCustomerId = Settings.getCustomerId(this);
+            mCustomerId = Settings.GetCustomerId(this);
 
             if (mBraintreeFragment == null)
             {
@@ -114,7 +109,7 @@ namespace BraintreeDropInQs
 
             if (mBraintreeFragment != null)
             {
-                if (Build.VERSION.SdkInt >= Build.VERSION_CODES.N)
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.N)
                 {
                     FragmentManager.BeginTransaction().Remove(mBraintreeFragment).CommitNow();
                 }
@@ -127,76 +122,75 @@ namespace BraintreeDropInQs
                 mBraintreeFragment = null;
             }
 
-            reset();
-            fetchAuthorization();
+            Reset();
+            FetchAuthorization();
         }
-        protected abstract void reset();
-        protected abstract void onAuthorizationFetched();
-        protected void fetchAuthorization()
+
+        protected abstract void Reset();
+        protected abstract void OnAuthorizationFetched();
+
+        protected void FetchAuthorization()
         {
             if (mAuthorization != null)
             {
-                onAuthorizationFetched();
+                OnAuthorizationFetched();
             }
-            else if (Settings.useTokenizationKey(this))
+            else if (Settings.UseTokenizationKey(this))
             {
-                mAuthorization = Settings.getEnvironmentTokenizationKey(this);
-                onAuthorizationFetched();
+                mAuthorization = Settings.GetEnvironmentTokenizationKey(this);
+                OnAuthorizationFetched();
             }
             else
             {
                 DemoApplication.getApiClient(this).GetClientToken(
-                        Settings.getCustomerId(this),
-                        Settings.getMerchantAccountId(this))
+                        Settings.GetCustomerId(this),
+                        Settings.GetMerchantAccountId(this))
                         .ContinueWith(t =>
                         {
                             if (t.IsFaulted || TextUtils.IsEmpty(t.Result))
                             {
-                                showDialog("Client token was empty");
+                                ShowDialog("Client token was empty");
                             }
                             else
                             {
                                 mAuthorization = t.Result;
-                                onAuthorizationFetched();
+                                OnAuthorizationFetched();
                             }
                         });
             }
         }
 
-
-
-        private void setupActionBar()
+        void SetupActionBar()
         {
             Android.Support.V7.App.ActionBar actionBar = SupportActionBar;
             actionBar.SetDisplayShowTitleEnabled(false);
             actionBar.NavigationMode = (int)ActionBarNavigationMode.List;
 
-            ArrayAdapter adapter =ArrayAdapter.CreateFromResource(this,
+            ArrayAdapter adapter = ArrayAdapter.CreateFromResource(this,
                     Resource.Array.environments, Android.Resource.Layout.SimpleDropDownItem1Line);
             actionBar.SetListNavigationCallbacks(adapter, this);
             actionBar.SetSelectedNavigationItem(Settings.getEnvironment(this));
         }
 
-
-        public virtual void OnCancel(int p0)
+        public virtual void OnCancel(int requestCode)
         {
-            //mLogger.debug("Cancel received: " + requestCode);
+            System.Diagnostics.Debug.WriteLine("Cancel received: " + requestCode);
         }
 
-        public virtual void OnError(Java.Lang.Exception p0)
+        public virtual void OnError(Java.Lang.Exception error)
         {
-            //mLogger.debug("Error received (" + error.getClass() + "): " + error.getMessage());
-            //mLogger.debug(error.toString());
+            System.Diagnostics.Debug.WriteLine("Error received (" + error.GetType() + "): " + error.Message);
+            System.Diagnostics.Debug.WriteLine(error.StackTrace);
 
-            showDialog("An error occurred ");
+            ShowDialog("An error occurred ");
         }
 
         public bool OnNavigationItemSelected(int itemPosition, long itemId)
         {
             if (Settings.getEnvironment(this) != itemPosition)
             {
-                Settings.setEnvironment(this, itemPosition);
-                performReset();
+                Settings.SetEnvironment(this, itemPosition);
+                PerformReset();
             }
             return true;
 
@@ -207,6 +201,7 @@ namespace BraintreeDropInQs
             MenuInflater.Inflate(Resource.Menu.menu, menu);
             return true;
         }
+
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
@@ -215,7 +210,7 @@ namespace BraintreeDropInQs
                     Finish();
                     return true;
                 case Resource.Id.reset:
-                    performReset();
+                    PerformReset();
                     return true;
                 case Resource.Id.settings:
                     StartActivity(new Intent(this, typeof(SettingsActivity)));
@@ -225,12 +220,12 @@ namespace BraintreeDropInQs
             }
         }
 
-        public virtual  void OnPaymentMethodNonceCreated(PaymentMethodNonce p0)
+        public virtual void OnPaymentMethodNonceCreated(PaymentMethodNonce p0)
         {
-            //mLogger.debug("Payment Method Nonce received: " + paymentMethodNonce.getTypeLabel());
+            System.Diagnostics.Debug.WriteLine("Payment Method Nonce received: " + p0.TypeLabel);
         }
 
-        protected void showDialog(string message)
+        protected void ShowDialog(string message)
         {
             dialog = new Android.App.AlertDialog.Builder(this)
                     .SetMessage(message)
@@ -238,7 +233,7 @@ namespace BraintreeDropInQs
                     .Show();
         }
 
-        protected void setUpAsBack()
+        protected void SetUpAsBack()
         {
             if (ActionBar != null)
             {
@@ -246,32 +241,9 @@ namespace BraintreeDropInQs
             }
         }
 
-
-
         public void OnClick(IDialogInterface dialog, int which)
         {
             dialog.Dismiss();
-        }
-    }
-
-
-    public class MyCallBack : Java.Lang.Object, Square.Retrofit.ICallback
-    {
-
-        public Action<RetrofitError> MFailure;
-        public Action<Models.ClientToken, Response> MSuccess;
-
-
-        public void Failure(RetrofitError p0)
-        {
-            MFailure?.Invoke(p0);
-        }
-
-        public void Success(Java.Lang.Object p0, Response p1)
-        {
-            MSuccess?.Invoke((Models.ClientToken)p0, p1);
-
-
         }
     }
 }

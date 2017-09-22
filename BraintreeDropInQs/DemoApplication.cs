@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Java.Lang;
 using static Java.Lang.Thread;
 using BraintreeDropInQs.Internal;
-using Square.Retrofit;
 using Com.Braintreepayments.Api;
 
 namespace BraintreeDropInQs
@@ -71,13 +65,13 @@ namespace BraintreeDropInQs
         {
             if (sApiClient == null)
             {
-                sApiClient = new ApiClientImpl(Settings.getEnvironmentUrl(context));
+                sApiClient = new ApiClientImpl(Settings.GetEnvironmentUrl(context));
             }
 
             return sApiClient;
         }
 
-        public static void resetApiClient()
+        public static void ResetApiClient()
         {
             sApiClient = null;
         }

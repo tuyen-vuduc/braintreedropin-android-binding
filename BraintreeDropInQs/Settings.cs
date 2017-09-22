@@ -1,31 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.Preferences;
 
 namespace BraintreeDropInQs
 {
     public class Settings
     {
-        protected static  String ENVIRONMENT = "environment";
+        protected static String ENVIRONMENT = "environment";
 
-    private static  String VERSION = "version";
+        static String VERSION = "version";
 
-    private static  String SANDBOX_BASE_SERVER_URL = "https://braintree-sample-merchant.herokuapp.com";
-    private static  String PRODUCTION_BASE_SERVER_URL = "https://executive-sample-merchant.herokuapp.com";
+        static String SANDBOX_BASE_SERVER_URL = "https://braintree-sample-merchant.herokuapp.com";
+        static String PRODUCTION_BASE_SERVER_URL = "https://executive-sample-merchant.herokuapp.com";
 
-    private static  String SANDBOX_TOKENIZATION_KEY = "sandbox_tmxhyf7d_dcpspy2brwdjr3qn";
-    private static  String PRODUCTION_TOKENIZATION_KEY = "production_t2wns2y2_dfy45jdj3dxkmz5m";
-
-    private static ISharedPreferences sSharedPreferences;
+        static String SANDBOX_TOKENIZATION_KEY = "sandbox_tmxhyf7d_dcpspy2brwdjr3qn";
+        static String PRODUCTION_TOKENIZATION_KEY = "production_t2wns2y2_dfy45jdj3dxkmz5m";
+        static ISharedPreferences sSharedPreferences;
 
         public static ISharedPreferences getPreferences(Context context)
         {
@@ -52,23 +42,23 @@ namespace BraintreeDropInQs
             return getPreferences(context).GetInt(ENVIRONMENT, 0);
         }
 
-        public static void setEnvironment(Context context, int environment)
+        public static void SetEnvironment(Context context, int environment)
         {
             getPreferences(context)
                     .Edit()
                     .PutInt(ENVIRONMENT, environment)
                     .Apply();
 
-           DemoApplication.resetApiClient();
+            DemoApplication.ResetApiClient();
 
         }
 
-        public static String getSandboxUrl()
+        public static String GetSandboxUrl()
         {
             return SANDBOX_BASE_SERVER_URL;
         }
 
-        public static String getEnvironmentUrl(Context context)
+        public static String GetEnvironmentUrl(Context context)
         {
             int environment = getEnvironment(context);
             if (environment == 0)
@@ -85,22 +75,22 @@ namespace BraintreeDropInQs
             }
         }
 
-        public static String getCustomerId(Context context)
+        public static String GetCustomerId(Context context)
         {
             return getPreferences(context).GetString("customer", null);
         }
 
-        public static String getMerchantAccountId(Context context)
+        public static String GetMerchantAccountId(Context context)
         {
             return getPreferences(context).GetString("merchant_account", null);
         }
 
-        public static bool shouldCollectDeviceData(Context context)
+        public static bool ShouldCollectDeviceData(Context context)
         {
             return getPreferences(context).GetBoolean("collect_device_data", false);
         }
 
-        public static String getThreeDSecureMerchantAccountId(Context context)
+        public static String GetThreeDSecureMerchantAccountId(Context context)
         {
             if (isThreeDSecureEnabled(context) && getEnvironment(context) == 1)
             {
@@ -112,7 +102,7 @@ namespace BraintreeDropInQs
             }
         }
 
-        public static String getUnionPayMerchantAccountId(Context context)
+        public static String GetUnionPayMerchantAccountId(Context context)
         {
             if (getEnvironment(context) == 0)
             {
@@ -124,12 +114,12 @@ namespace BraintreeDropInQs
             }
         }
 
-        public static bool useTokenizationKey(Context context)
+        public static bool UseTokenizationKey(Context context)
         {
             return getPreferences(context).GetBoolean("tokenization_key", false);
         }
 
-        public static String getEnvironmentTokenizationKey(Context context)
+        public static String GetEnvironmentTokenizationKey(Context context)
         {
             int environment = getEnvironment(context);
             if (environment == 0)
@@ -146,22 +136,22 @@ namespace BraintreeDropInQs
             }
         }
 
-        public static bool isAndroidPayShippingAddressRequired(Context context)
+        public static bool IsAndroidPayShippingAddressRequired(Context context)
         {
             return getPreferences(context).GetBoolean("android_pay_require_shipping_address", false);
         }
 
-        public static bool isAndroidPayPhoneNumberRequired(Context context)
+        public static bool IsAndroidPayPhoneNumberRequired(Context context)
         {
             return getPreferences(context).GetBoolean("android_pay_require_phone_number", false);
         }
 
-        public static String getAndroidPayCurrency(Context context)
+        public static String GetAndroidPayCurrency(Context context)
         {
             return getPreferences(context).GetString("android_pay_currency", "USD");
         }
 
-        public static String[] getAndroidPayAllowedCountriesForShipping(Context context)
+        public static String[] GetAndroidPayAllowedCountriesForShipping(Context context)
         {
             String[] countries = getPreferences(context).GetString("android_pay_allowed_countries_for_shipping", "US").Split(",".ToCharArray());
             for (int i = 0; i < countries.Length; i++)

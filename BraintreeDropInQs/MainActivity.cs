@@ -22,33 +22,32 @@ namespace BraintreeDropInQs
     [Activity(Label = "BraintreeDropInQs", MainLauncher = true, Theme = "@style/Theme.AppCompat.Light")]
     public class MainActivity : BaseActivity, IPaymentMethodNonceCreatedListener, IBraintreeCancelListener, IBraintreeErrorListener, DropInResult.IDropInResultListener
     {
-        private static int DROP_IN_REQUEST = 100;
+        static int DROP_IN_REQUEST = 100;
 
-        private static string KEY_NONCE = "nonce";
+        static string KEY_NONCE = "nonce";
 
-        private PaymentMethodType mPaymentMethodType;
-        private PaymentMethodNonce mNonce;
+        PaymentMethodType mPaymentMethodType;
+        PaymentMethodNonce mNonce;
 
-        private CardView mPaymentMethod;
-        private ImageView mPaymentMethodIcon;
-        private TextView mPaymentMethodTitle;
-        private TextView mPaymentMethodDescription;
-        private TextView mNonceString;
-        private TextView mNonceDetails;
-        private TextView mDeviceData;
+        CardView mPaymentMethod;
+        ImageView mPaymentMethodIcon;
+        TextView mPaymentMethodTitle;
+        TextView mPaymentMethodDescription;
+        TextView mNonceString;
+        TextView mNonceDetails;
+        TextView mDeviceData;
 
-        private Button mAddPaymentMethodButton;
-        private Button mPurchaseButton;
-        private ProgressDialog mLoading;
+        Button mAddPaymentMethodButton;
+        Button mPurchaseButton;
+        ProgressDialog mLoading;
 
-        private bool mShouldMakePurchase = false;
-        private bool mPurchased = false;
+        bool mShouldMakePurchase = false;
 
-
+        bool mPurchased = false;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState); 
+            base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.main_activity);
 
             mPaymentMethod = FindViewById<CardView>(Resource.Id.payment_method);
@@ -68,23 +67,22 @@ namespace BraintreeDropInQs
             {
                 if (savedInstanceState.ContainsKey(KEY_NONCE))
                 {
-                   mNonce = (PaymentMethodNonce)savedInstanceState.GetParcelable(KEY_NONCE);
+                    mNonce = (PaymentMethodNonce)savedInstanceState.GetParcelable(KEY_NONCE);
                 }
             }
         }
 
-
-        private void MAddPaymentMethodButton_Click(object sender, System.EventArgs e)
+        void MAddPaymentMethodButton_Click(object sender, System.EventArgs e)
         {
             DropInRequest dropInRequest = new DropInRequest()
                   .ClientToken(mAuthorization)
                   .Amount("1.00")
                   .RequestThreeDSecureVerification(Settings.isThreeDSecureEnabled(this))
-                  .CollectDeviceData(Settings.shouldCollectDeviceData(this))
+                  .CollectDeviceData(Settings.ShouldCollectDeviceData(this))
                   .AndroidPayCart(getAndroidPayCart())
-                  .AndroidPayShippingAddressRequired(Settings.isAndroidPayShippingAddressRequired(this))
-                  .AndroidPayPhoneNumberRequired(Settings.isAndroidPayPhoneNumberRequired(this))
-                  .AndroidPayAllowedCountriesForShipping(Settings.getAndroidPayAllowedCountriesForShipping(this));
+                  .AndroidPayShippingAddressRequired(Settings.IsAndroidPayShippingAddressRequired(this))
+                  .AndroidPayPhoneNumberRequired(Settings.IsAndroidPayPhoneNumberRequired(this))
+                  .AndroidPayAllowedCountriesForShipping(Settings.GetAndroidPayAllowedCountriesForShipping(this));
 
             if (Settings.isPayPalAddressScopeRequested(this))
             {
@@ -131,32 +129,30 @@ namespace BraintreeDropInQs
                 outState.PutParcelable(KEY_NONCE, mNonce);
             }
         }
-        public override void OnPaymentMethodNonceCreated(PaymentMethodNonce p0)
+        public override void OnPaymentMethodNonceCreated(PaymentMethodNonce paymentMethodNonce)
         {
-            // mLogger.debug("Payment Method Nonce received: " + paymentMethodNonce.getTypeLabel());
+            System.Diagnostics.Debug.WriteLine("Payment Method Nonce received: " + paymentMethodNonce.TypeLabel);
         }
 
-        public override void OnCancel(int p0)
+        public override void OnCancel(int requestCode)
         {
-            // mLogger.debug("Cancel received: " + requestCode);
+            System.Diagnostics.Debug.WriteLine("Cancel received: " + requestCode);
         }
 
-        public override void OnError(Exception p0)
+        public override void OnError(Exception error)
         {
-            // mLogger.debug("Error received (" + error.getClass() + "): " + error.getMessage());
+            System.Diagnostics.Debug.WriteLine("Error received (" + error.GetType() + "): " + error.Message);
             //mLogger.debug(error.toString());
 
-            showDialog("An error occurred ");
+            ShowDialog("An error occurred ");
         }
 
-       
-
-        public void purchase(View v)
+        public void Purchase(View v)
         {
             if (mPaymentMethodType == PaymentMethodType.AndroidPay && mNonce == null)
             {
                 List<Android.Gms.Identity.Intents.Model.CountrySpecification> countries = new List<Android.Gms.Identity.Intents.Model.CountrySpecification>();
-                foreach (string countryCode in Settings.getAndroidPayAllowedCountriesForShipping(this))
+                foreach (string countryCode in Settings.GetAndroidPayAllowedCountriesForShipping(this))
                 {
                     countries.Add(new Android.Gms.Identity.Intents.Model.CountrySpecification(countryCode));
                 }
@@ -164,8 +160,8 @@ namespace BraintreeDropInQs
                 mShouldMakePurchase = true;
 
                 AndroidPay.RequestAndroidPay(mBraintreeFragment, getAndroidPayCart(),
-                        Settings.isAndroidPayShippingAddressRequired(this),
-                        Settings.isAndroidPayPhoneNumberRequired(this), countries);
+                        Settings.IsAndroidPayShippingAddressRequired(this),
+                        Settings.IsAndroidPayPhoneNumberRequired(this), countries);
             }
             else
             {
@@ -176,6 +172,7 @@ namespace BraintreeDropInQs
                 mPurchased = true;
             }
         }
+
         public void OnResult(DropInResult result)
         {
             if (result.PaymentMethodType == null)
@@ -191,7 +188,7 @@ namespace BraintreeDropInQs
                 mPaymentMethodIcon.SetImageResource(result.PaymentMethodType.Drawable);
                 if (result.PaymentMethodNonce != null)
                 {
-                    displayResult(result.PaymentMethodNonce, result.DeviceData);
+                    DisplayResult(result.PaymentMethodNonce, result.DeviceData);
                 }
                 else if (result.PaymentMethodType == PaymentMethodType.AndroidPay)
                 {
@@ -235,7 +232,7 @@ namespace BraintreeDropInQs
         private Cart getAndroidPayCart()
         {
             return Cart.NewBuilder()
-                    .SetCurrencyCode(Settings.getAndroidPayCurrency(this))
+                    .SetCurrencyCode(Settings.GetAndroidPayCurrency(this))
                     .SetTotalPrice("1.00")
                     .AddLineItem(LineItem.NewBuilder()
                             .SetCurrencyCode("USD")
@@ -247,33 +244,37 @@ namespace BraintreeDropInQs
                     .Build();
         }
 
-        protected override void onAuthorizationFetched()
+        protected override void OnAuthorizationFetched()
         {
             try
             {
                 mBraintreeFragment = BraintreeFragment.NewInstance(this, mAuthorization);
 
-                if (ClientToken.FromString(mAuthorization) is ClientToken) {
+                if (ClientToken.FromString(mAuthorization) is ClientToken)
+                {
                     DropInResult.FetchDropInResult(this, mAuthorization, this);
-                } else {
-                    mAddPaymentMethodButton.Visibility= ViewStates.Visible;
+                }
+                else
+                {
+                    mAddPaymentMethodButton.Visibility = ViewStates.Visible;
                 }
             }
             catch (InvalidArgumentException e)
             {
-                showDialog(e.Message);
+                ShowDialog(e.Message);
             }
         }
 
-        protected override void reset()
+        protected override void Reset()
         {
-            mPurchaseButton.Enabled=false;
+            mPurchaseButton.Enabled = false;
 
-            mAddPaymentMethodButton.Visibility=ViewStates.Gone;
+            mAddPaymentMethodButton.Visibility = ViewStates.Gone;
 
             clearNonce();
         }
-        private void displayResult(PaymentMethodNonce paymentMethodNonce, string deviceData)
+
+        private void DisplayResult(PaymentMethodNonce paymentMethodNonce, string deviceData)
         {
             mNonce = paymentMethodNonce;
             mPaymentMethodType = PaymentMethodType.ForType(mNonce);
@@ -333,7 +334,8 @@ namespace BraintreeDropInQs
             mAddPaymentMethodButton.Visibility = Android.Views.ViewStates.Gone;
             mPurchaseButton.Enabled = true;
         }
-        private void safelyCloseLoadingView()
+
+        void SafelyCloseLoadingView()
         {
             if (mLoading != null && mLoading.IsShowing)
             {
@@ -344,21 +346,21 @@ namespace BraintreeDropInQs
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
-            
-            safelyCloseLoadingView();
+
+            SafelyCloseLoadingView();
 
             if (resultCode == Result.Ok)
             {
                 DropInResult result = (DropInResult)data.GetParcelableExtra(DropInResult.ExtraDropInResult);
-                displayResult(result.PaymentMethodNonce, result.DeviceData);
+                DisplayResult(result.PaymentMethodNonce, result.DeviceData);
                 mPurchaseButton.Enabled = (true);
             }
             else if (resultCode != Result.Canceled)
             {
-                safelyCloseLoadingView();
+                SafelyCloseLoadingView();
                 var error = data.GetSerializableExtra(DropInActivity.ExtraError);
 
-                showDialog(((Exception)error)
+                ShowDialog(((Exception)error)
                         .Message);
             }
         }
