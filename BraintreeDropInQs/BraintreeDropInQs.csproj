@@ -259,8 +259,8 @@
     <AndroidResource Include="Resources\drawable\ic_launcher.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Naxam.BraintreeDropIn .Droid\Naxam.BraintreeDropIn.Droid.csproj">
-      <Project>{33e916f1-74ce-40e0-a5a8-b7043c3623f7}</Project>
+    <ProjectReference Include="..\Naxam.BraintreeDropIn.Droid\Naxam.BraintreeDropIn.Droid.csproj">
+      <Project>{33E916F1-74CE-40E0-A5A8-B7043C3623F7}</Project>
       <Name>Naxam.BraintreeDropIn.Droid</Name>
     </ProjectReference>
   </ItemGroup>
