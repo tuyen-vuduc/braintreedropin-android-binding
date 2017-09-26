@@ -2768,26 +2768,8 @@ namespace BraintreeDropInQs
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
-			// aapt resource value: 0x7f0200af
-			public const int avd_hide_password_1 = 2130837679;
-			
-			// aapt resource value: 0x7f0200b0
-			public const int avd_hide_password_2 = 2130837680;
-			
-			// aapt resource value: 0x7f0200b1
-			public const int avd_hide_password_3 = 2130837681;
-			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
-			
-			// aapt resource value: 0x7f0200b2
-			public const int avd_show_password_1 = 2130837682;
-			
-			// aapt resource value: 0x7f0200b3
-			public const int avd_show_password_2 = 2130837683;
-			
-			// aapt resource value: 0x7f0200b4
-			public const int avd_show_password_3 = 2130837684;
 			
 			// aapt resource value: 0x7f020055
 			public const int bt_ic_amex = 2130837589;
