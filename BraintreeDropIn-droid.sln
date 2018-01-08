@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Naxam.BraintreeDropIn.Droid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BraintreeDropInQs", "BraintreeDropInQs\BraintreeDropInQs.csproj", "{040714AD-8105-4006-8DA5-77D2775EA9A9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demo", "demo", "{B6D84F02-DDC1-40FE-B8BF-E2FB83C77BAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,5 +31,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {19A455B3-7C17-4181-9CFB-37985260534D}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{040714AD-8105-4006-8DA5-77D2775EA9A9} = {B6D84F02-DDC1-40FE-B8BF-E2FB83C77BAA}
 	EndGlobalSection
 EndGlobal
