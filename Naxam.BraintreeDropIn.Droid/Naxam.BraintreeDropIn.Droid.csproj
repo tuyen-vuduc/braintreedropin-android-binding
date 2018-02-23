@@ -73,9 +73,6 @@
     <Reference Include="Naxam.Paypal.OneTouch">
       <HintPath>..\packages\Naxam.Paypal.OneTouch.2.8.1\lib\MonoAndroid10\Naxam.Paypal.OneTouch.dll</HintPath>
     </Reference>
-    <Reference Include="Naxam.BrainTree.Droid">
-      <HintPath>..\packages\Naxam.BrainTree.Droid.2.8.1\lib\MonoAndroid10\Naxam.BrainTree.Droid.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Android.Support.Annotations">
       <HintPath>..\packages\Xamarin.Android.Support.Annotations.26.1.0.1\lib\MonoAndroid80\Xamarin.Android.Support.Annotations.dll</HintPath>
     </Reference>
@@ -130,6 +127,9 @@
     <Reference Include="Naxam.BraintreeCardForm.Droid">
       <HintPath>..\packages\Naxam.BraintreeCardForm.Droid.3.1.1\lib\MonoAndroid10\Naxam.BraintreeCardForm.Droid.dll</HintPath>
     </Reference>
+    <Reference Include="Naxam.BrainTree.Droid">
+      <HintPath>..\packages\Naxam.BrainTree.Droid.2.10.0\lib\MonoAndroid10\Naxam.BrainTree.Droid.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes.cs" />
@@ -146,7 +146,7 @@
     <TransformFile Include="Transforms\EnumMethods.xml" />
   </ItemGroup>
   <ItemGroup>
-    <LibraryProjectZip Include="Jars\drop-in-3.2.0.aar" />
+    <LibraryProjectZip Include="Jars\dropin.aar" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.Bindings.targets" />
   <Import Project="..\packages\Xamarin.Build.Download.0.4.7\build\Xamarin.Build.Download.targets" Condition="Exists('..\packages\Xamarin.Build.Download.0.4.7\build\Xamarin.Build.Download.targets')" />

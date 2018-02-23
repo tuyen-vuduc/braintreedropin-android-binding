@@ -16,6 +16,8 @@ using Android.Content;
 using Com.Braintreepayments.Api.Interfaces;
 using Java.Lang;
 using Android.Runtime;
+using Java.Interop;
+using System;
 
 namespace BraintreeDropInQs
 {
@@ -86,9 +88,6 @@ namespace BraintreeDropInQs
 
             if (Settings.isPayPalAddressScopeRequested(this))
             {
-
-                var list = Collections.SingletonList(PayPal.ScopeAddress);
-
                 dropInRequest.PaypalAdditionalScopes(new List<string> { PayPal.ScopeAddress });
             }
 
@@ -139,7 +138,7 @@ namespace BraintreeDropInQs
             System.Diagnostics.Debug.WriteLine("Cancel received: " + requestCode);
         }
 
-        public override void OnError(Exception error)
+        public override void OnError(Java.Lang.Exception error)
         {
             System.Diagnostics.Debug.WriteLine("Error received (" + error.GetType() + "): " + error.Message);
             //mLogger.debug(error.toString());
@@ -147,6 +146,7 @@ namespace BraintreeDropInQs
             ShowDialog("An error occurred ");
         }
 
+        [ExportAttribute("purchase")]
         public void Purchase(View v)
         {
             if (mPaymentMethodType == PaymentMethodType.AndroidPay && mNonce == null)
@@ -171,6 +171,13 @@ namespace BraintreeDropInQs
 
                 mPurchased = true;
             }
+        }
+
+
+        [ExportAttribute("launchDropIn")]
+        public void launchDropIn(View v)
+        {
+            MAddPaymentMethodButton_Click(v, EventArgs.Empty);
         }
 
         public void OnResult(DropInResult result)
@@ -360,7 +367,7 @@ namespace BraintreeDropInQs
                 SafelyCloseLoadingView();
                 var error = data.GetSerializableExtra(DropInActivity.ExtraError);
 
-                ShowDialog(((Exception)error)
+                ShowDialog(((Java.Lang.Exception)error)
                         .Message);
             }
         }

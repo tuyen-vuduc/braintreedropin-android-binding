@@ -71,24 +71,6 @@
     <Reference Include="Naxam.BrainTree.BrowserSwitch.Droid, Version=0.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Naxam.BrainTree.BrowserSwitch.Droid.0.1.4\lib\MonoAndroid10\Naxam.BrainTree.BrowserSwitch.Droid.dll</HintPath>
     </Reference>
-    <Reference Include="Naxam.BrainTree.Core, Version=2.6.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Naxam.BrainTree.Core.2.6.2.1\lib\MonoAndroid10\Naxam.BrainTree.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Naxam.BrainTree.Droid, Version=2.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Naxam.BrainTree.Droid.2.6.2\lib\MonoAndroid10\Naxam.BrainTree.Droid.dll</HintPath>
-    </Reference>
-    <Reference Include="Naxam.Paypal.DataCollector, Version=2.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Naxam.Paypal.DataCollector.2.6.2\lib\MonoAndroid10\Naxam.Paypal.DataCollector.dll</HintPath>
-    </Reference>
-    <Reference Include="Naxam.Paypal.OneTouch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Naxam.Paypal.OneTouch.2.6.2\lib\MonoAndroid10\Naxam.Paypal.OneTouch.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\netstandard1.3\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Refit, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Refit.4.0.1\lib\netstandard1.4\Refit.dll</HintPath>
-    </Reference>
     <Reference Include="Square.Retrofit, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Square.Retrofit.1.9.0.0\lib\MonoAndroid\Square.Retrofit.dll</HintPath>
     </Reference>
@@ -104,12 +86,6 @@
     <Reference Include="GoogleGson">
       <HintPath>..\packages\GoogleGson.2.8.1\lib\MonoAndroid\GoogleGson.dll</HintPath>
     </Reference>
-    <Reference Include="Naxam.SquareUp.Okio">
-      <HintPath>..\packages\Naxam.SquareUp.Okio.1.13.0\lib\MonoAndroid10\Naxam.SquareUp.Okio.dll</HintPath>
-    </Reference>
-    <Reference Include="Naxam.SquareUp.OkHttp3">
-      <HintPath>..\packages\Naxam.SquareUp.OkHttp3.3.8.0\lib\MonoAndroid10\Naxam.SquareUp.OkHttp3.dll</HintPath>
-    </Reference>
     <Reference Include="Square.OkIO">
       <HintPath>..\packages\Square.OkIO.1.13.0\lib\MonoAndroid\Square.OkIO.dll</HintPath>
     </Reference>
@@ -118,15 +94,6 @@
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.4.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Primitives">
-      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Net.Http.Headers">
-      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.0.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNetCore.WebUtilities">
-      <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.2.0.0\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.GooglePlayServices.Basement">
       <HintPath>..\packages\Xamarin.GooglePlayServices.Basement.60.1142.0\lib\MonoAndroid80\Xamarin.GooglePlayServices.Basement.dll</HintPath>
@@ -203,9 +170,34 @@
     <Reference Include="Xamarin.Android.Support.v14.Preference">
       <HintPath>..\packages\Xamarin.Android.Support.v14.Preference.26.1.0.1\lib\MonoAndroid80\Xamarin.Android.Support.v14.Preference.dll</HintPath>
     </Reference>
-    <Reference Include="Naxam.BraintreeCardForm.Droid">
-      <HintPath>..\packages\Naxam.BraintreeCardForm.Droid.3.1.1\lib\MonoAndroid10\Naxam.BraintreeCardForm.Droid.dll</HintPath>
+    <Reference Include="Microsoft.Extensions.Primitives">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.0.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.0.1\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.WebUtilities">
+      <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.2.0.1\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Refit">
+      <HintPath>..\packages\Refit.4.3.0\lib\netstandard1.4\Refit.dll</HintPath>
+    </Reference>
+    <Reference Include="Naxam.BrainTree.Core">
+      <HintPath>..\packages\Naxam.BrainTree.Core.2.10.0\lib\MonoAndroid10\Naxam.BrainTree.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Naxam.Paypal.DataCollector">
+      <HintPath>..\packages\Naxam.Paypal.DataCollector.2.10.0\lib\MonoAndroid10\Naxam.Paypal.DataCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Naxam.Paypal.OneTouch">
+      <HintPath>..\packages\Naxam.Paypal.OneTouch.2.10.0\lib\MonoAndroid10\Naxam.Paypal.OneTouch.dll</HintPath>
+    </Reference>
+    <Reference Include="Naxam.BrainTree.Droid">
+      <HintPath>..\packages\Naxam.BrainTree.Droid.2.10.0\lib\MonoAndroid10\Naxam.BrainTree.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android.Export" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiInternal\SignatureVerificationOverrides.cs" />
@@ -276,21 +268,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Refit.4.0.1\build\netstandard1.4\refit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Refit.4.0.1\build\netstandard1.4\refit.targets'))" />
-  </Target>
-  <Import Project="..\packages\Refit.4.0.1\build\netstandard1.4\refit.targets" Condition="Exists('..\packages\Refit.4.0.1\build\netstandard1.4\refit.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-		Other similar extension points exist, see Microsoft.Common.targets.
-		<Target Name="BeforeBuild">
-		</Target>
-		<Target Name="AfterBuild">
-		</Target>
-	-->
-  <Import Project="..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />
   <Import Project="..\packages\Xamarin.Build.Download.0.4.7\build\Xamarin.Build.Download.targets" Condition="Exists('..\packages\Xamarin.Build.Download.0.4.7\build\Xamarin.Build.Download.targets')" />
   <Import Project="..\packages\Xamarin.GooglePlayServices.Basement.60.1142.0\build\MonoAndroid80\Xamarin.GooglePlayServices.Basement.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Basement.60.1142.0\build\MonoAndroid80\Xamarin.GooglePlayServices.Basement.targets')" />
   <Import Project="..\packages\Xamarin.GooglePlayServices.Tasks.60.1142.0\build\MonoAndroid80\Xamarin.GooglePlayServices.Tasks.targets" Condition="Exists('..\packages\Xamarin.GooglePlayServices.Tasks.60.1142.0\build\MonoAndroid80\Xamarin.GooglePlayServices.Tasks.targets')" />
@@ -317,4 +294,6 @@
   <Import Project="..\packages\Xamarin.Android.Support.Design.26.1.0.1\build\MonoAndroid80\Xamarin.Android.Support.Design.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Design.26.1.0.1\build\MonoAndroid80\Xamarin.Android.Support.Design.targets')" />
   <Import Project="..\packages\Xamarin.Android.Support.v7.Preference.26.1.0.1\build\MonoAndroid80\Xamarin.Android.Support.v7.Preference.targets" Condition="Exists('..\packages\Xamarin.Android.Support.v7.Preference.26.1.0.1\build\MonoAndroid80\Xamarin.Android.Support.v7.Preference.targets')" />
   <Import Project="..\packages\Xamarin.Android.Support.v14.Preference.26.1.0.1\build\MonoAndroid80\Xamarin.Android.Support.v14.Preference.targets" Condition="Exists('..\packages\Xamarin.Android.Support.v14.Preference.26.1.0.1\build\MonoAndroid80\Xamarin.Android.Support.v14.Preference.targets')" />
+  <Import Project="..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\packages\Refit.4.3.0\build\netstandard1.4\refit.targets" Condition="Exists('..\packages\Refit.4.3.0\build\netstandard1.4\refit.targets')" />
 </Project>

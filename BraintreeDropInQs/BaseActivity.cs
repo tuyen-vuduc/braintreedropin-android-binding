@@ -10,11 +10,11 @@ using Com.Braintreepayments.Api.Interfaces;
 using Com.Braintreepayments.Api.Models;
 using Com.Braintreepayments.Api;
 using BraintreeDropInQs.ApiInternal;
-using Com.Paypal.Android.Sdk.Onetouch.Core;
 using Android.Support.V4.Content;
 using Android.Support.V4.App;
 using Android.Content.PM;
 using Android.Text;
+using Com.Paypal.Android.Sdk.Onetouch.Core;
 
 namespace BraintreeDropInQs
 {

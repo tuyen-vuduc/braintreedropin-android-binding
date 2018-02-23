@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BraintreeDropInQs
 {
-    [Activity(Label = "CreateTransactionActivity")]
+    [Activity(Label = "CreateTransactionActivity", Theme = "@style/Theme.AppCompat.Light")]
     public class CreateTransactionActivity : AppCompatActivity
     {
         public static Java.Lang.String EXTRA_PAYMENT_METHOD_NONCE = new Java.Lang.String("nonce");

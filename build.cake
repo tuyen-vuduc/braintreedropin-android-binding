@@ -10,7 +10,7 @@
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
 
-var VERSION = "2.10.0";
+var VERSION = "3.2.1";
 
 //////////////////////////////////////////////////////////////////////
 // PREPARATION
@@ -18,11 +18,11 @@ var VERSION = "2.10.0";
 
 var artifacts = new [] {
     new Artifact {
-        SolutionPath = "./braintree-droid.sln",
-        AssemblyInfoPath = "./Naxam.BrainTree.Droid/Properties/AssemblyInfo.cs",
-        NuspecPath = "./braintree.nuspec",
-        DownloadUrl = "http://central.maven.org/maven2/com/braintreepayments/api/braintree/{0}/braintree-{0}.aar",
-        JarPath = "./Naxam.BrainTree.Droid/Jars/braintree.aar"
+        SolutionPath = "./BraintreeDropIn-droid.sln",
+        AssemblyInfoPath = "./Naxam.BraintreeDropIn.Droid/Properties/AssemblyInfo.cs",
+        NuspecPath = "./dropin.nuspec",
+        DownloadUrl = "http://central.maven.org/maven2/com/braintreepayments/api/drop-in/{0}/drop-in-{0}.aar",
+        JarPath = "./Naxam.BraintreeDropIn.Droid/Jars/dropin.aar"
     }
 };
 
@@ -96,16 +96,16 @@ Task("Pack")
     foreach(var artifact in artifacts) {
         NuGetPack(artifact.NuspecPath, new NuGetPackSettings {
             Version = VERSION,
-            Dependencies = new []{
-                new NuSpecDependency {
-                    Id = "Naxam.BrainTree.Core",
-                    Version = VERSION
-                },
-                new NuSpecDependency {
-                    Id = "Naxam.Paypal.OneTouch",
-                    Version = VERSION
-                }
-            }
+            // Dependencies = new []{
+            //     new NuSpecDependency {
+            //         Id = "Naxam.BrainTree.Core",
+            //         Version = VERSION
+            //     },
+            //     new NuSpecDependency {
+            //         Id = "Naxam.Paypal.OneTouch",
+            //         Version = VERSION
+            //     }
+            // }
         });
     }
 });
